@@ -3,6 +3,7 @@ package Adapter
 import Model.Product
 import android.R.attr.*
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,14 +11,27 @@ import android.view.ViewGroup
 import com.myrefriapp.R
 import android.widget.TextView
 import android.widget.Toast
+import com.myrefriapp.DetailRowActivity
 import org.w3c.dom.Text
-
 
 class ListRowAdapter (val context: Context, val listProducts: List<Product>) : RecyclerView.Adapter<ListRowAdapter.ViewHolder>() {
 
-    class ViewHolder(view: View, ctx: Context, products: ArrayList<Product>): RecyclerView.ViewHolder(view){
+    class ViewHolder(val view: View, val ctx: Context, val products: ArrayList<Product>): RecyclerView.ViewHolder(view), View.OnClickListener {
         val name: TextView = view.findViewById<View>(R.id.name) as TextView
         val detail: TextView = view.findViewById<View>(R.id.detail) as TextView
+
+        init {
+            view.setOnClickListener(this)
+        }
+
+        override fun onClick(v: View?) {
+            val position: Int = adapterPosition
+            val product: Product = products.get(position)
+            val intent:Intent = Intent(ctx, DetailRowActivity::class.java)
+            intent.putExtra("name", product.name)
+            intent.putExtra("detail", product.detail)
+            ctx.startActivity(intent)
+        }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -34,6 +48,5 @@ class ListRowAdapter (val context: Context, val listProducts: List<Product>) : R
     override fun getItemCount(): Int {
         return listProducts.size
     }
-
 }
 
