@@ -3,6 +3,7 @@ package Adapter
 import Model.Product
 import android.R.attr.*
 import android.content.Context
+import android.content.Intent
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import android.view.ViewGroup
 import com.myrefriapp.R
 import android.widget.TextView
 import android.widget.Toast
+import com.myrefriapp.DetailRowActivity
 import org.w3c.dom.Text
 
 class ListRowAdapter (val context: Context, val listProducts: List<Product>) : RecyclerView.Adapter<ListRowAdapter.ViewHolder>() {
@@ -25,7 +27,10 @@ class ListRowAdapter (val context: Context, val listProducts: List<Product>) : R
         override fun onClick(v: View?) {
             val position: Int = adapterPosition
             val product: Product = products.get(position)
-            Toast.makeText(ctx, product.name, Toast.LENGTH_LONG).show()
+            val intent:Intent = Intent(ctx, DetailRowActivity::class.java)
+            intent.putExtra("name", product.name)
+            intent.putExtra("detail", product.detail)
+            ctx.startActivity(intent)
         }
     }
 
