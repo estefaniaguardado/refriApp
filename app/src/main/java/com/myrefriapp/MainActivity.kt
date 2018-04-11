@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
 
         val listProducts: ArrayList<Product> = ArrayList()
 
-        for (i in 1..10){
+        for (i in 1..100){
             val product: Product = Product("Product " + i, "Detail")
             listProducts.add(product)
         }
